@@ -23,6 +23,16 @@ import datetime
 from datetime import date, timedelta
 import joblib
 
+import holidays
+from pandas.tseries.offsets import CustomBusinessDay
+
+# tgl merah indo
+years = range(2025, 2026)
+id_holidays = holidays.Indonesia(years=years)
+holiday_dates = pd.to_datetime(list(id_holidays.keys()))
+
+# custom business day: exclude weekend + tgl merah indo
+custom_bd = CustomBusinessDay(holidays=holiday_dates)
 
 bulan_mapping = {
     'Januari': 'January',
@@ -360,7 +370,11 @@ def plot_forex(df, df_forecast, step):
     df_close.rename(columns={"index": "Date"}, inplace=True)
 
     last_date = df_close["Date"].iloc[-1]
-    future_dates = pd.date_range(start=last_date + timedelta(days=1), periods=step, freq='B')
+    future_dates = pd.date_range(
+        start=last_date + timedelta(days=1), 
+        periods=step, 
+        freq=custom_bd
+    )
 
     fig = go.Figure()
     
@@ -600,7 +614,7 @@ def arimax_1_horizon(df, exog, p,d,q, step,currency):
     last_date = df.index[-1]
     future_dates = pd.date_range(
         start=df.index[-1] + timedelta(days=1), periods=step,
-        freq='B'
+        freq=custom_bd
     )
     
     forecast = np.array(forecast).flatten()
@@ -707,7 +721,7 @@ def arimaxgarchx_1_horizon(df, exog, p_vol, d_vol, q_vol, p_gar, q_gar, step, cu
     future_dates = pd.date_range(
         start=last_date + timedelta(days=1),
         periods=step,
-        freq="B"
+        freq=custom_bd
     )
     
     result = pd.DataFrame({
@@ -788,8 +802,11 @@ def arimax_5_horizon(df, exog, p,d,q, step,currency):
     upper = conf_int.iloc[:, 1]
     
     last_date = df.index[-1]
-    future_dates = pd.date_range(start=df.index[-1] + timedelta(days=1),
-                            periods=step, freq='B')
+    future_dates = pd.date_range(
+        start=df.index[-1] + timedelta(days=1), 
+        periods=step, 
+        freq=custom_bd
+    )
     
     forecast_df = pd.DataFrame({
         "Date": future_dates,
@@ -980,7 +997,7 @@ def arimax_5_horizon_vol(df, exog, p_vol, d_vol, q_vol, p_gar, q_gar, step,curre
     future_dates = pd.date_range(
         start=last_date + timedelta(days=1),
         periods=step,
-        freq="B"
+        freq=custom_bd
     )
     
     result = pd.DataFrame({
@@ -1149,6 +1166,3 @@ if st.sidebar.button("🔮 Prediksi"):
         elif choice == 2 or choice == 4 or choice==6:
             arimax_5_horizon(df, exog, p,d,q, step, currency)
             arimax_5_horizon_vol(df, exog, p_vol, d_vol, q_vol, p_gar, q_gar, step,currency)
-            
-        
-        
