@@ -11,11 +11,11 @@ st.subheader("2. Pilih Mata Uang")
 st.write("Pilih salah satu mata uang yang ingin Anda prediksi")
 st.write("")
 
-st.subheader("3. Tentukan Rentang Prediksi")
-st.write("Pilih rentang waktu prediksi yang Anda inginkan")
-st.write("")
+# st.subheader("3. Tentukan Rentang Prediksi")
+# st.write("Pilih rentang waktu prediksi yang Anda inginkan")
+# st.write("")
 
-st.subheader("4. Jalankan Prediksi")
+st.subheader("3. Jalankan Prediksi")
 st.write("Klik tombol **Prediksi** untuk memulai analisis")
 
 st.divider()

@@ -44,15 +44,14 @@ st.markdown("##### 📈 Prediksi Harga Penutupan")
 st.markdown("""
     Gree menyediakan fitur prediksi harga penutupan
     untuk pasangan mata uang USD/IDR, EUR/IDR, dan GBP/IDR.
-    Prediksi dapat dilakukan untuk 1 hari dan 5 hari ke depan (hari kerja).
+    Prediksi dapat dilakukan untuk 1 hari ke depan (hari kerja).
 """)
 
 st.markdown("##### 📊 Prediksi Volatilitas")
 st.markdown("""
     Selain harga penutupan, Gree juga mampu memprediksi volatilitas
     nilai tukar USD/IDR, EUR/IDR, dan GBP/IDR, yang merepresentasikan tingkat fluktuasi
-    harga. Prediksi volatilitas dilakukan untuk 1 hari dan
-    5 hari ke depan (hari kerja).
+    harga. Prediksi volatilitas dilakukan untuk 1 hari ke depan (hari kerja).
     """)
 
 st.write("")
