@@ -503,10 +503,11 @@ last_date = df_map[currency]().index[-1]
 st.sidebar.write(last_date.strftime('%d-%m-%Y'))
 
 st.sidebar.markdown("")
-st.sidebar.markdown("### Pilih Rentang Prediksi")
-range_option = st.sidebar.radio("Rentang prediksi ke depan (business day)", ["1 hari ke depan", "5 hari ke depan"])
+st.sidebar.markdown("### Rentang Prediksi")
+st.sidebar.markdown("###### 1 hari ke depan (business day)")
+# range_option = st.sidebar.radio("Rentang prediksi ke depan (business day)", ["1 hari ke depan", "5 hari ke depan"])
 
-if currency == "USD/IDR" and range_option == "1 hari ke depan":
+if currency == "USD/IDR":
     p = 2
     d = 1
     q = 2
@@ -519,20 +520,7 @@ if currency == "USD/IDR" and range_option == "1 hari ke depan":
     df = combine_usd()
     choice = 1
     
-elif currency == "USD/IDR" and range_option == "5 hari ke depan":
-    step = 5
-    p = 1
-    d = 1
-    q = 1
-    p_vol = 1
-    d_vol = 0
-    q_vol = 0
-    p_gar = 1
-    q_gar = 1
-    df = combine_usd()
-    choice = 2
-    
-elif currency == "EUR/IDR" and range_option == "1 hari ke depan":
+elif currency == "EUR/IDR":
     step = 1
     p = 1
     d = 1
@@ -545,20 +533,7 @@ elif currency == "EUR/IDR" and range_option == "1 hari ke depan":
     df = combine_eur()
     choice = 3
 
-elif currency == "EUR/IDR" and range_option == "5 hari ke depan":
-    step = 5
-    p = 2
-    d = 1
-    q = 1
-    p_vol = 0
-    d_vol = 0
-    q_vol = 1
-    p_gar = 2
-    q_gar = 2
-    df = combine_eur()
-    choice = 4
-
-elif currency == "GBP/IDR" and range_option == "1 hari ke depan":
+elif currency == "GBP/IDR":
     step = 1
     window = 30
     p = 1
@@ -571,19 +546,6 @@ elif currency == "GBP/IDR" and range_option == "1 hari ke depan":
     q_gar = 2
     df = combine_gbp()
     choice = 5
-    
-elif currency == "GBP/IDR" and range_option == "5 hari ke depan":
-    step = 5
-    p = 1
-    d = 1
-    q = 2
-    p_vol = 1
-    d_vol = 0
-    q_vol = 0
-    p_gar = 2
-    q_gar = 2
-    df = combine_gbp()
-    choice = 6
 
 def info_ci_price():
     st.info("Tingkat kepercayaan atau confidence interval pada prediksi harga penutupan menunjukkan rentang nilai di mana harga penutupan yang sebenarnya kemungkinan besar akan berada.")
