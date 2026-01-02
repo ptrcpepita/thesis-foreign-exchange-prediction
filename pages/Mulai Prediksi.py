@@ -512,9 +512,9 @@ if currency == "USD/IDR":
     p = 1
     d = 1
     q = 1
-    p_vol = 0
+    p_vol = 2
     d_vol = 0
-    q_vol = 2
+    q_vol = 1
     p_gar = 1
     q_gar = 1
     df = combine_usd()
@@ -525,10 +525,10 @@ elif currency == "EUR/IDR":
     p = 1
     d = 1
     q = 2
-    p_vol = 1
+    p_vol = 2
     d_vol = 0
-    q_vol = 0
-    p_gar = 2
+    q_vol = 1
+    p_gar = 1
     q_gar = 1
     df = combine_eur()
     choice = 3
@@ -539,7 +539,7 @@ elif currency == "GBP/IDR":
     p = 0
     d = 1
     q = 5
-    p_vol = 0
+    p_vol = 1
     d_vol = 0
     q_vol = 1
     p_gar = 1
