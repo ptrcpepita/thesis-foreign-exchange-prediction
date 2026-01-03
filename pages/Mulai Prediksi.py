@@ -430,6 +430,70 @@ def plot_forex(df, df_forecast, step):
 
     st.plotly_chart(fig, use_container_width=True)
 
+def plot_forex_latest(df, df_forecast, step):
+    df_close = pd.DataFrame(df['Close Price']).copy()
+    df_close = df_close.reset_index()   # ensure Date is a column
+    df_close.rename(columns={"index": "Date"}, inplace=True)
+    
+    # Ambil 30 hari terakhir dari data historis
+    df_last_30 = df_close.tail(30).copy()
+    
+    df_forecast_h1 = df_forecast.head(1).copy()
+    
+    fig = go.Figure()
+    
+    # Plot 30 hari terakhir
+    fig.add_trace(go.Scatter(
+        x=df_last_30["Date"],
+        y=df_last_30["Close Price"],
+        mode="lines",
+        name="Historis (30 Hari Terakhir)",
+        line=dict(color="blue", width=2),
+    ))
+    
+    # Confidence Interval untuk H+1
+    fig.add_trace(go.Scatter(
+        x=list(df_forecast_h1["Date"]) + list(df_forecast_h1["Date"][::-1]),
+        y=list(df_forecast_h1["Upper CI"]) + list(df_forecast_h1["Lower CI"][::-1]),
+        fill='toself',
+        fillcolor='rgba(255,0,0,0.35)',
+        line=dict(color='rgba(255,0,0,0)'),
+        name="Confidence Interval"
+    ))
+    
+    # Forecast H+1
+    fig.add_trace(
+       go.Scatter(
+         x=df_forecast_h1["Date"],
+         y=df_forecast_h1["Forecast"],
+         mode="lines+markers+text",
+         name="Prediksi H+1",
+         line=dict(color="red", width=2, dash="dash"),
+         marker=dict(color="red", size=8),
+         text=[f"Rp {val:,.3f}" for val in df_forecast_h1["Forecast"]],
+         textposition="top center",
+         hovertemplate="Tanggal: %{x}<br>Prediksi: Rp %{y:,.3f}<extra></extra>"))
+    
+    fig.update_traces(line=dict(width=2))
+    fig.update_layout(
+        template="plotly_white",
+        title={'text': "Data Historis 30 Hari Terakhir dan Prediksi H+1 Harga Penutupan",
+               'x': 0.5,
+               'xanchor':'center',
+               'yanchor':'top',
+               'font': dict(size=18)},
+        xaxis=dict(showgrid=False, title="Tanggal"),
+        yaxis=dict(showgrid=True, gridcolor="lightgray", title="Harga Penutupan (Rp)"),
+        hovermode="x unified",
+        legend=dict(
+          orientation="h",
+          yanchor="bottom",
+          y=1.02,
+          xanchor="center",
+          x=0.5),
+       height=450)
+    
+    st.plotly_chart(fig, use_container_width=True)
 
 def plot_volatility(df, forecast_df, future_dates):
     df["log_return"] = np.log(df["Close Price"] / df["Close Price"].shift(1))
@@ -637,6 +701,7 @@ def arimax_1_horizon(df, exog, p,d,q, step,currency):
     info_ci_price()
     
     plot_forex(df, forecast_df, step)
+    plot_forex_latest(df, forecast_df, step)
     st.write(f"**Expected Return:** {perubahan_persen:.3f}%")
 
     if expected_return > 0:
