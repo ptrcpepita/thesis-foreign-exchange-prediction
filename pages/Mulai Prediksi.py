@@ -593,7 +593,7 @@ def arimax_1_horizon(df, exog, p,d,q, step,currency):
 
     expected_return = ((next_price - last_price) / last_price) * 100
     
-    st.header(f"1️⃣ Prediksi Close Price {currency}")
+    st.header(f"📊 Prediksi Close Price {currency}")
     st.write("")
     st.write("")
     
