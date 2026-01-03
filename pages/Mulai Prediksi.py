@@ -700,8 +700,8 @@ def arimax_1_horizon(df, exog, p,d,q, step,currency):
     st.write("")
     info_ci_price()
     
-    plot_forex(df, forecast_df, step)
     plot_forex_latest(df, forecast_df, step)
+    plot_forex(df, forecast_df, step)
     st.write(f"**Expected Return:** {perubahan_persen:.3f}%")
 
     if expected_return > 0:
